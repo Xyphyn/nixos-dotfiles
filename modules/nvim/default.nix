@@ -22,7 +22,9 @@ in {
       enable = true;
       plugins = with pkgs.vimPlugins; [
         nerdtree
-        tokyonight-nvim
+	vim-airline
+        vim-airline-themes
+	onedark-nvim
       ];
       extraConfig = ''
         luafile ~/.config/nvim/settings.lua

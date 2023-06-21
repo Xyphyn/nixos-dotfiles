@@ -6,9 +6,15 @@
 
 {
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot = {
+    tmp.cleanOnBoot = true;
+    supportedFilesystems = [ "ntfs" ];
+    loader = {
+      systemd-boot.enable = true;
+      timeout = 0;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
   networking.hostName = "james-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -153,6 +159,11 @@
 
   nix = {
     package = pkgs.nixFlakes;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
