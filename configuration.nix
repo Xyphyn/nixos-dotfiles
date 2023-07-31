@@ -44,6 +44,16 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  fonts = {
+    fonts = with pkgs; [
+      cantarell-fonts
+      jetbrains-mono
+      noto-fonts-emoji
+      noto-fonts
+    ];
+    fontDir.enable = true;
+  };
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -60,6 +70,9 @@
     totem
     evince
     geary
+    gnome-software
+    gnome-calendar
+    gnome-maps
   ]);
 
   # Configure keymap in X11
@@ -86,6 +99,26 @@
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
+  };
+
+  environment.etc = {
+    "wireplumber/main.lua.d/51-disable-suspension.lua".text = ''
+    table.insert (alsa_monitor.rules, {
+  matches = {
+    {
+      -- Matches all sources.
+      { "node.name", "matches", "alsa_input.*" },
+    },
+    {
+      -- Matches all sinks.
+      { "node.name", "matches", "alsa_output.*" },
+    },
+  },
+  apply_properties = {
+    ["session.suspend-timeout-seconds"] = 0,  -- 0 disables suspend
+  },
+})
+    '';
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -177,4 +210,16 @@
   };
 
   security.polkit.enable = true;
+
+  # Fix dbus issue
+  systemd.packages = [
+    (pkgs.writeTextFile {
+      name = "flatpak-dbus-overrides";
+      destination = "/etc/systemd/user/dbus-.service.d/flatpak.conf";
+      text = ''
+        [Service]
+        ExecSearchPath=${pkgs.flatpak}/bin
+      '';
+    })
+  ];
 }

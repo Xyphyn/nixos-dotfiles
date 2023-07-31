@@ -11,5 +11,7 @@
     gnomeExtensions.enable = true;
     zsh.enable = true;
     nvim.enable = true;
+    browser.enable = true;
+    recording.enable = true;
   };
 }

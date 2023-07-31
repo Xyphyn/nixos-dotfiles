@@ -11,8 +11,9 @@ in
     programs.zsh = {
         enable = true;
         shellAliases = {
-        l = "ls -l";
-        vim = "nvim";
+          l = "ls -l";
+          vim = "nvim";
+	  s = "sudo";
         };
         oh-my-zsh = {
         enable = true;

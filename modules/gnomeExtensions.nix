@@ -14,10 +14,12 @@ in
       pkgs.gnomeExtensions.dash-to-dock
       pkgs.gnomeExtensions.blur-my-shell
       pkgs.gnomeExtensions.appindicator
+
+      # apps
+      pkgs.clapper
     ];
 
     home.sessionVariables = {
-      BROWSER = "epiphany";
       TERMINAL = "kgx";
     };
   };

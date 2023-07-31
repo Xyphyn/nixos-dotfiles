@@ -8,5 +8,7 @@
         ./code.nix
         ./git.nix
 	./zsh.nix
+	./browser.nix
+	./recording.nix
     ];
 }
